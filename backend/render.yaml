@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: jobportal-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false   # paste your Neon connection string in Render dashboard
+      - key: JWT_SECRET
+        sync: false   # set a strong secret in Render dashboard
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: INDIAN_API_KEY
+        value: sk-live-DE89UuFNVSpdSJLOt5GflFAm9IF1Pikl3jXPPCo9
+      - key: INDIAN_API_URL
+        value: https://jobs.indianapi.in
+      - key: FRONTEND_URL
+        sync: false   # paste your Vercel URL e.g. https://jobportal.vercel.app
