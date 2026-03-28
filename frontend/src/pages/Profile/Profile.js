@@ -16,7 +16,7 @@ const Profile = () => {
   const [success, setSuccess] = useState('');
   const [errors, setErrors] = useState({});
 
-  // Load profile on mount
+  
   useEffect(() => {
     const load = async () => {
       try {
@@ -27,7 +27,7 @@ const Profile = () => {
         if (err.response?.status !== 404) {
           setError('Failed to load profile');
         }
-        // 404 means no profile yet — show create form
+        
         setEditing(true);
       } finally {
         setLoading(false);
@@ -71,7 +71,7 @@ const Profile = () => {
     setError('');
     setSuccess('');
 
-    // Parse skills from comma-separated string
+    
     const payload = {
       ...form,
       skills: form.skills
@@ -114,7 +114,7 @@ const Profile = () => {
     setError('');
   };
 
-  // Build profile-like object from form for progress bar preview
+ 
   const previewProfile = editing
     ? {
         ...form,
@@ -134,11 +134,11 @@ const Profile = () => {
     <div className="profile-page">
       <div className="container">
         <div className="profile-layout">
-          {/* Left: Progress + Info */}
+          
           <div className="profile-sidebar">
             <ProfileProgress profile={previewProfile} />
 
-            {/* Profile summary card (view mode) */}
+            
             {profile && !editing && (
               <div className="profile-summary card">
                 <div className="profile-avatar">
@@ -163,7 +163,7 @@ const Profile = () => {
             )}
           </div>
 
-          {/* Right: Form */}
+          
           <div className="profile-main">
             <div className="profile-form-card card">
               <div className="form-card-header">
@@ -285,7 +285,7 @@ const Profile = () => {
                   </div>
                 </form>
               ) : (
-                /* View mode */
+                
                 <div className="profile-view">
                   {[
                     { label: 'Education', value: profile?.education, icon: '🎓' },

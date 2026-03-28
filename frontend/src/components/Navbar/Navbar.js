@@ -10,7 +10,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
-    { path: '/', label: 'Jobs', icon: '💼' },
+    { path: '/home', label: 'Jobs', icon: '💼' },
     { path: '/profile', label: 'Profile', icon: '👤' },
     { path: '/applied-jobs', label: 'Applications', icon: '📋' },
   ];
@@ -23,13 +23,13 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo */}
-        <Link to="/" className="navbar-logo">
+        
+        <Link to="/home" className="navbar-logo">
           <span className="logo-icon">⚡</span>
           <span className="logo-text">Job<span className="logo-accent">Portal</span></span>
         </Link>
 
-        {/* Desktop Nav Links */}
+        
         <ul className="navbar-links">
           {navLinks.map((link) => (
             <li key={link.path}>
@@ -44,7 +44,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* User info + logout */}
+        
         <div className="navbar-user">
           {user && (
             <div className="user-info">
@@ -59,7 +59,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile hamburger */}
+        
         <button
           className="hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -69,7 +69,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      
       {menuOpen && (
         <div className="mobile-menu">
           {navLinks.map((link) => (

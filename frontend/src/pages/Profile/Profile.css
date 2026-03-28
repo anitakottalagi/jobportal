@@ -1,10 +1,8 @@
-.profile-page {
-  padding: 2rem 0 4rem;
-}
+.profile-page { padding: 2rem 0 4rem; }
 
 .profile-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 290px 1fr;
   gap: 1.5rem;
   align-items: start;
 }
@@ -12,14 +10,16 @@
 /* Sidebar */
 .profile-sidebar {
   position: sticky;
-  top: 90px;
+  top: 84px;
 }
-
 .profile-summary {
-  text-align: center;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   padding: 1.75rem 1.25rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
 }
-
 .profile-avatar {
   width: 72px;
   height: 72px;
@@ -30,30 +30,26 @@
   justify-content: center;
   font-size: 1.8rem;
   font-weight: 800;
-  color: white;
+  color: #fff;
   margin: 0 auto 1rem;
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.3);
 }
-
 .profile-name {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
-
 .profile-email {
   font-size: 0.85rem;
   color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
-
 .profile-location {
   font-size: 0.82rem;
   color: var(--text-secondary);
   margin-bottom: 1rem;
 }
-
 .profile-skills-preview {
   display: flex;
   flex-wrap: wrap;
@@ -61,59 +57,46 @@
   justify-content: center;
   margin-bottom: 1.25rem;
 }
-
-.edit-btn {
-  width: 100%;
-  justify-content: center;
-}
+.edit-btn { width: 100%; justify-content: center; }
 
 /* Main form card */
 .profile-form-card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
   padding: 2rem;
+  box-shadow: var(--shadow-sm);
 }
-
 .form-card-header {
   margin-bottom: 1.75rem;
   padding-bottom: 1.25rem;
   border-bottom: 1px solid var(--border-color);
 }
-
 .form-card-title {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
 }
-
-.form-card-subtitle {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
+.form-card-subtitle { font-size: 0.875rem; color: var(--text-muted); }
 
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 1.25rem;
 }
-
-.form-full {
-  grid-column: 1 / -1;
-}
+.form-full { grid-column: 1 / -1; }
 
 .label-hint {
   font-size: 0.78rem;
   color: var(--text-muted);
   font-weight: 400;
 }
-
-.input-error {
-  border-color: var(--danger) !important;
-}
-
+.input-error { border-color: var(--danger) !important; }
 .field-error {
   display: block;
   font-size: 0.78rem;
-  color: #fca5a5;
+  color: var(--danger);
   margin-top: 0.3rem;
 }
 
@@ -127,71 +110,42 @@
 }
 
 /* View mode */
-.profile-view {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
+.profile-view { display: flex; flex-direction: column; gap: 1rem; }
 .view-field {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--grey-100);
   border: 1px solid var(--border-color);
   border-radius: 10px;
 }
-
-.view-icon {
-  font-size: 1.2rem;
-  flex-shrink: 0;
-  margin-top: 0.1rem;
-}
-
+.view-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.1rem; }
 .view-label {
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.3rem;
 }
-
 .view-value {
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.5;
 }
-
 .view-link {
   font-size: 0.9rem;
-  color: var(--accent-purple-light);
+  color: var(--accent-purple);
   text-decoration: none;
   word-break: break-all;
 }
-
-.view-link:hover {
-  text-decoration: underline;
-}
-
-.skills-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
+.view-link:hover { text-decoration: underline; }
+.skills-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 @media (max-width: 900px) {
-  .profile-layout {
-    grid-template-columns: 1fr;
-  }
-  .profile-sidebar {
-    position: static;
-  }
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .form-full {
-    grid-column: 1;
-  }
+  .profile-layout { grid-template-columns: 1fr; }
+  .profile-sidebar { position: static; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-full { grid-column: 1; }
 }

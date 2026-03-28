@@ -35,7 +35,7 @@ const Login = () => {
     try {
       const res = await loginUser(form);
       login(res.data.token, res.data.user);
-      history.push('/');
+      history.push('/home');
     } catch (err) {
       setServerError(err.response?.data?.message || 'Login failed. Please try again.');
     } finally {
@@ -46,7 +46,7 @@ const Login = () => {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        {/* Logo */}
+        
         <div className="auth-logo">
           <span className="auth-logo-icon">⚡</span>
           <span className="auth-logo-text">Job<span className="auth-logo-accent">Portal</span></span>

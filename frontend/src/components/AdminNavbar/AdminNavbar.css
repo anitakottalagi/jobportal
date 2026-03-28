@@ -1,0 +1,89 @@
+.admin-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #fff;
+  border-bottom: 2px solid #ede9fe;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08);
+}
+
+.admin-navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 32px;
+}
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 800;
+  color: #1f2937;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-accent { color: #7c3aed; }
+
+.admin-nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 4px;
+  flex: 1;
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.admin-nav-link:hover { background: #f5f3ff; color: #7c3aed; }
+.admin-nav-link.active { background: #ede9fe; color: #7c3aed; font-weight: 600; }
+
+.admin-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.admin-name {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.admin-logout-btn {
+  background: transparent;
+  border: 1.5px solid #7c3aed;
+  color: #7c3aed;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.admin-logout-btn:hover {
+  background: #7c3aed;
+  color: #fff;
+}

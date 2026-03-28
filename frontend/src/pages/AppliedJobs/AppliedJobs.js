@@ -51,7 +51,7 @@ const AppliedJobs = () => {
   return (
     <div className="applied-page">
       <div className="container">
-        {/* Header */}
+        
         <div className="applied-header">
           <div>
             <h1 className="applied-title">My Applications</h1>
@@ -64,11 +64,10 @@ const AppliedJobs = () => {
           </div>
         </div>
 
-        {/* Messages */}
         {error && <div className="error-message">{error}</div>}
         {successMsg && <div className="success-message">{successMsg}</div>}
 
-        {/* Content */}
+        
         {loading ? (
           <div className="loading-spinner">
             <div className="spinner" />
@@ -84,12 +83,12 @@ const AppliedJobs = () => {
           <div className="applications-list">
             {applications.map((app) => (
               <div key={app.id} className="application-card fade-in">
-                {/* Left: Company avatar */}
+                
                 <div className="app-avatar">
                   {app.company ? app.company.charAt(0).toUpperCase() : '?'}
                 </div>
 
-                {/* Center: Job info */}
+                
                 <div className="app-info">
                   <h3 className="app-job-title">{app.job_title || 'Unknown Position'}</h3>
                   <p className="app-company">{app.company || 'Unknown Company'}</p>
@@ -102,7 +101,7 @@ const AppliedJobs = () => {
                     <span className="app-meta-item">✉️ {app.email}</span>
                   </div>
 
-                  {/* Skills */}
+                  
                   {app.skills_required && app.skills_required.length > 0 && (
                     <div className="app-skills">
                       {app.skills_required.slice(0, 4).map((skill, i) => (
@@ -111,15 +110,22 @@ const AppliedJobs = () => {
                     </div>
                   )}
 
-                  {/* Cover note preview */}
+                  
                   {app.cover_note && (
                     <p className="app-cover-note">"{app.cover_note.slice(0, 100)}{app.cover_note.length > 100 ? '...' : ''}"</p>
                   )}
                 </div>
 
-                {/* Right: Actions */}
+                
                 <div className="app-actions">
-                  <span className="app-status-badge">Applied</span>
+                  <span className={`app-status-badge status-${app.status || 'pending'}`}>
+                    {app.status === 'selected' ? '✅ Selected' : app.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
+                  </span>
+                  {app.admin_response && (
+                    <div className="admin-response-box">
+                      <span className="admin-response-label">Admin:</span> {app.admin_response}
+                    </div>
+                  )}
                   {app.resume_link && (
                     <a
                       href={app.resume_link}

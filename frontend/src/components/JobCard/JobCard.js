@@ -1,9 +1,7 @@
 import React from 'react';
 import './JobCard.css';
 
-/**
- * JobCard - Displays a single job listing with match percentage and apply button
- */
+
 const JobCard = ({ job, onApply, appliedJobIds = [] }) => {
   const { id, title, company, location, description, skills_required, matchPercentage } = job;
 
@@ -26,7 +24,7 @@ const JobCard = ({ job, onApply, appliedJobIds = [] }) => {
 
   return (
     <div className="job-card fade-in">
-      {/* Match badge */}
+      
       {matchPercentage !== undefined && (
         <div
           className="match-badge"
@@ -41,7 +39,7 @@ const JobCard = ({ job, onApply, appliedJobIds = [] }) => {
         </div>
       )}
 
-      {/* Job header */}
+      
       <div className="job-header">
         <div className="company-avatar">
           {company ? company.charAt(0).toUpperCase() : '?'}
@@ -52,18 +50,18 @@ const JobCard = ({ job, onApply, appliedJobIds = [] }) => {
         </div>
       </div>
 
-      {/* Location */}
+      
       <div className="job-location">
         <span className="location-icon">📍</span>
         {location || 'Remote'}
       </div>
 
-      {/* Description */}
+      
       {description && (
         <p className="job-description">{truncate(description)}</p>
       )}
 
-      {/* Skills */}
+      
       {skills_required && skills_required.length > 0 && (
         <div className="job-skills">
           {skills_required.slice(0, 5).map((skill, i) => (
@@ -75,7 +73,7 @@ const JobCard = ({ job, onApply, appliedJobIds = [] }) => {
         </div>
       )}
 
-      {/* Apply button */}
+      
       <div className="job-footer">
         {isApplied ? (
           <span className="applied-tag">✓ Applied</span>

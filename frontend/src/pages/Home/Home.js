@@ -15,7 +15,7 @@ const Home = () => {
   const [successMsg, setSuccessMsg] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Load jobs, profile, and applications on mount
+  
   const loadData = useCallback(async (triggerFetch = false) => {
     setLoading(true);
     setError('');
@@ -28,7 +28,7 @@ const Home = () => {
 
       const fetchedJobs = jobsRes.status === 'fulfilled' ? jobsRes.value.data : [];
 
-      // If DB is empty on first load, auto-fetch from API/seed
+      
       if (fetchedJobs.length === 0 || triggerFetch) {
         try {
           await fetchJobsFromAPI();
@@ -54,7 +54,7 @@ const Home = () => {
     loadData();
   }, [loadData]);
 
-  // Fetch fresh jobs from external API
+  
   const handleFetchFromAPI = async () => {
     setFetching(true);
     setError('');
@@ -62,7 +62,7 @@ const Home = () => {
     try {
       const res = await fetchJobsFromAPI();
       setSuccessMsg(res.data.message);
-      // Reload jobs after fetch
+      
       const refreshed = await getJobs();
       setJobs(refreshed.data || []);
     } catch (err) {
@@ -72,7 +72,7 @@ const Home = () => {
     }
   };
 
-  // Submit application
+  
   const handleApplySubmit = async (formData) => {
     await createApplication(formData);
     setSuccessMsg(`Application submitted for ${selectedJob.title}`);
@@ -81,7 +81,7 @@ const Home = () => {
     setTimeout(() => setSuccessMsg(''), 4000);
   };
 
-  // Filter jobs by search
+  
   const filteredJobs = jobs.filter((job) => {
     const q = searchQuery.toLowerCase();
     return (
@@ -97,7 +97,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="container">
-        {/* Hero Section */}
+       
         <div className="home-hero">
           <h1 className="hero-title">
             Find Your <span className="gradient-text">Dream Job</span>
@@ -108,7 +108,7 @@ const Home = () => {
               : 'Create your profile to see personalized job matches.'}
           </p>
 
-          {/* Search bar */}
+          
           <div className="search-bar">
             <span className="search-icon">🔍</span>
             <input
@@ -124,7 +124,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Actions bar */}
         <div className="actions-bar">
           <div className="jobs-count">
             {filteredJobs.length} job{filteredJobs.length !== 1 ? 's' : ''} found
@@ -142,11 +141,11 @@ const Home = () => {
           </button>
         </div>
 
-        {/* Messages */}
+        
         {error && <div className="error-message">{error}</div>}
         {successMsg && <div className="success-message">{successMsg}</div>}
 
-        {/* No profile warning */}
+        
         {!profile && !loading && (
           <div className="profile-warning">
             <span>⚠️</span>
@@ -156,7 +155,7 @@ const Home = () => {
           </div>
         )}
 
-        {/* Jobs Grid */}
+        
         {loading ? (
           <div className="loading-spinner">
             <div className="spinner" />
@@ -184,7 +183,7 @@ const Home = () => {
         )}
       </div>
 
-      {/* Apply Modal */}
+      
       {selectedJob && (
         <ApplyModal
           job={selectedJob}

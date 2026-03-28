@@ -1,12 +1,9 @@
 import React from 'react';
 import './ProfileProgress.css';
 
-/**
- * ProfileProgress - Dynamic profile completion progress bar
- * Color: 0-40% Red, 40-70% Yellow, 70-100% Green
- */
+
 const ProfileProgress = ({ profile }) => {
-  // Fields that count toward completion
+  
   const fields = ['name', 'email', 'education', 'skills', 'experience', 'resume_link', 'location'];
 
   const filledCount = fields.filter((field) => {
@@ -18,9 +15,9 @@ const ProfileProgress = ({ profile }) => {
   const percentage = Math.round((filledCount / fields.length) * 100);
 
   const getColor = () => {
-    if (percentage <= 40) return '#ef4444';   // Red
-    if (percentage <= 70) return '#f59e0b';   // Yellow
-    return '#10b981';                          // Green
+    if (percentage <= 40) return '#ef4444';   
+    if (percentage <= 70) return '#f59e0b';   
+    return '#10b981';                          
   };
 
   const getLabel = () => {
@@ -58,7 +55,7 @@ const ProfileProgress = ({ profile }) => {
         </span>
       </div>
 
-      {/* Field checklist */}
+      
       <div className="progress-checklist">
         {fields.map((field) => {
           const val = profile?.[field];

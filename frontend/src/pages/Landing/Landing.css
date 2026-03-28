@@ -1,0 +1,122 @@
+.landing-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 50%, #f3f4f6 100%);
+  padding: 20px;
+}
+
+.landing-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(124, 58, 237, 0.12);
+  text-align: center;
+}
+
+.landing-logo {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.logo-icon { margin-right: 6px; }
+.logo-text { color: #1f2937; }
+.logo-accent { color: #7c3aed; }
+
+.landing-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 8px;
+}
+
+.landing-subtitle {
+  color: #6b7280;
+  margin: 0 0 32px;
+  font-size: 15px;
+}
+
+.landing-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.landing-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.user-btn {
+  background: #f5f3ff;
+  border-color: #ddd6fe;
+  color: #1f2937;
+}
+
+.user-btn:hover {
+  background: #ede9fe;
+  border-color: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.15);
+}
+
+.admin-btn {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #fff;
+}
+
+.admin-btn:hover {
+  background: #6d28d9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+}
+
+.btn-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.btn-label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn-desc {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 2px;
+}
+
+.landing-divider {
+  color: #9ca3af;
+  font-size: 13px;
+  padding: 12px 0;
+  position: relative;
+}
+
+.landing-register {
+  margin-top: 28px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.landing-link {
+  color: #7c3aed;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.landing-link:hover { text-decoration: underline; }

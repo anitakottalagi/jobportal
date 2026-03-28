@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ApplyModal.css';
 
-/**
- * ApplyModal - Popup form for submitting a job application
- */
+
 const ApplyModal = ({ job, profile, onClose, onSubmit }) => {
   const [form, setForm] = useState({
     name: '',
@@ -15,7 +13,7 @@ const ApplyModal = ({ job, profile, onClose, onSubmit }) => {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
-  // Pre-fill from profile if available
+  
   useEffect(() => {
     if (profile) {
       setForm((prev) => ({
@@ -59,7 +57,7 @@ const ApplyModal = ({ job, profile, onClose, onSubmit }) => {
     }
   };
 
-  // Close on backdrop click
+  
   const handleBackdrop = (e) => {
     if (e.target === e.currentTarget) onClose();
   };
@@ -67,7 +65,7 @@ const ApplyModal = ({ job, profile, onClose, onSubmit }) => {
   return (
     <div className="modal-backdrop" onClick={handleBackdrop}>
       <div className="modal-container fade-in">
-        {/* Header */}
+        
         <div className="modal-header">
           <div>
             <h2 className="modal-title">Apply for Position</h2>
@@ -78,7 +76,7 @@ const ApplyModal = ({ job, profile, onClose, onSubmit }) => {
           <button className="modal-close" onClick={onClose} aria-label="Close">✕</button>
         </div>
 
-        {/* Form */}
+        
         <form onSubmit={handleSubmit} className="modal-form">
           {submitError && <div className="error-message">{submitError}</div>}
 

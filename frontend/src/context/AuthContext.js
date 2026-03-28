@@ -5,16 +5,25 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // checking stored token on mount
+  const [admin, setAdmin] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // On mount, restore session from localStorage
   useEffect(() => {
+    // Restore user session
     const token = localStorage.getItem('token');
     const stored = localStorage.getItem('user');
     if (token && stored) {
       setUser(JSON.parse(stored));
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
+
+    // Restore admin session
+    const adminToken = localStorage.getItem('adminToken');
+    const storedAdmin = localStorage.getItem('adminUser');
+    if (adminToken && storedAdmin) {
+      setAdmin(JSON.parse(storedAdmin));
+    }
+
     setLoading(false);
   }, []);
 
@@ -32,8 +41,27 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const adminLogin = (token, adminData) => {
+    localStorage.setItem('adminToken', token);
+    localStorage.setItem('adminUser', JSON.stringify(adminData));
+    setAdmin(adminData);
+  };
+
+  const adminLogout = () => {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminUser');
+    setAdmin(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, isAuthenticated: !!user }}>
+    <AuthContext.Provider
+      value={{
+        user, login, logout, loading,
+        isAuthenticated: !!user,
+        admin, adminLogin, adminLogout,
+        isAdminAuthenticated: !!admin,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
