@@ -12,8 +12,6 @@ import AppliedJobs from './pages/AppliedJobs/AppliedJobs';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import Landing from './pages/Landing/Landing';
-
-import AdminLogin from './pages/admin/AdminLogin/AdminLogin';
 import AdminApplications from './pages/admin/AdminApplications/AdminApplications';
 import AddJob from './pages/admin/AddJob/AddJob';
 import AdminJobs from './pages/admin/AdminJobs/AdminJobs';
@@ -35,9 +33,8 @@ const UserLayout = ({ children }) => (
 );
 
 const RootRedirect = () => {
-  const { isAuthenticated, isAdminAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   if (loading) return null;
-  if (isAdminAuthenticated) return <Redirect to="/admin/applications" />;
   if (isAuthenticated) return <Redirect to="/home" />;
   return <Landing />;
 };
@@ -51,7 +48,6 @@ function App() {
           <Route exact path="/" component={RootRedirect} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/admin/login" component={AdminLogin} />
 
           
           <AdminRoute

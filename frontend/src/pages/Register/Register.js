@@ -51,7 +51,6 @@ const Register = () => {
       <div className="auth-card">
         
         <div className="auth-logo">
-          <span className="auth-logo-icon">⚡</span>
           <span className="auth-logo-text">Job<span className="auth-logo-accent">Portal</span></span>
         </div>
 

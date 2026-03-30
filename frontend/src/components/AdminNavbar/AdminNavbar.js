@@ -38,11 +38,6 @@ const AdminNavbar = () => {
             </li>
           ))}
         </ul>
-
-        <div className="admin-nav-right">
-          {admin && <span className="admin-name">👤 {admin.name}</span>}
-          <button className="admin-logout-btn" onClick={handleLogout}>Sign Out</button>
-        </div>
       </div>
     </nav>
   );

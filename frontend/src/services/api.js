@@ -16,17 +16,11 @@ api.interceptors.request.use((config) => {
 });
 
 
-const adminApi = () => {
-  const token = localStorage.getItem('adminToken');
-  return axios.create({
-    baseURL: BASE_URL,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    timeout: 15000,
-  });
-};
+const adminApi = () => axios.create({
+  baseURL: BASE_URL,
+  headers: { 'Content-Type': 'application/json' },
+  timeout: 15000,
+});
 
 
 export const registerUser = (data) => api.post('/auth/register', data);

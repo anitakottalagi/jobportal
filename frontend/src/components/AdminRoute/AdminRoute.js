@@ -1,20 +1,8 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Route } from 'react-router-dom';
 
-const AdminRoute = ({ component: Component, ...rest }) => {
-  const { isAdminAuthenticated, loading } = useAuth();
-
-  if (loading) return null;
-
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAdminAuthenticated ? <Component {...props} /> : <Redirect to="/admin/login" />
-      }
-    />
-  );
-};
+const AdminRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => <Component {...props} />} />
+);
 
 export default AdminRoute;

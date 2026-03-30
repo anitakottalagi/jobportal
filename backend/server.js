@@ -71,20 +71,6 @@ const userAuth = (req, res, next) => {
   } catch { res.status(401).json({ message: 'Invalid or expired token' }); }
 };
 
-
-const adminAuth = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'No admin token provided' });
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.role !== 'admin') return res.status(403).json({ message: 'Not an admin token' });
-    req.adminId = decoded.id;
-    next();
-  } catch { res.status(401).json({ message: 'Invalid or expired token' }); }
-};
-
-
-
 const matchJobs = (jobs, userSkills = []) => {
   const norm = (s) => s.toLowerCase().trim();
   return jobs
@@ -148,72 +134,9 @@ const autoSeedJobs = async () => {
   } catch { await seedJobs(); }
 };
 
-
-
-app.post('/auth/register', async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) return res.status(400).json({ message: 'All fields required' });
-    if (password.length < 6) return res.status(400).json({ message: 'Password min 6 characters' });
-    const { rows } = await pool.query('SELECT id FROM users WHERE email=$1', [email]);
-    if (rows.length) return res.status(409).json({ message: 'Email already registered' });
-    const hash = await bcrypt.hash(password, 10);
-    const { rows: [user] } = await pool.query(
-      'INSERT INTO users (name,email,password) VALUES ($1,$2,$3) RETURNING id,name,email', [name, email, hash]);
-    const token = jwt.sign({ id: user.id, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.status(201).json({ message: 'Account created', token, user });
-  } catch (err) { res.status(500).json({ message: err.message }); }
-});
-
-app.post('/auth/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ message: 'Email and password required' });
-    const { rows } = await pool.query('SELECT * FROM users WHERE email=$1', [email]);
-    if (!rows.length || !(await bcrypt.compare(password, rows[0].password)))
-      return res.status(401).json({ message: 'Invalid email or password' });
-    const user = rows[0];
-    const token = jwt.sign({ id: user.id, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ message: 'Login successful', token, user: { id: user.id, name: user.name, email: user.email } });
-  } catch (err) { res.status(500).json({ message: err.message }); }
-});
-
 app.get('/auth/me', userAuth, async (req, res) => {
   const { rows } = await pool.query('SELECT id,name,email FROM users WHERE id=$1', [req.userId]);
   rows.length ? res.json(rows[0]) : res.status(404).json({ message: 'User not found' });
-});
-
-
-app.post('/admin/auth/register', async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) return res.status(400).json({ message: 'All fields required' });
-    const { rows } = await pool.query('SELECT id FROM admins WHERE email=$1', [email]);
-    if (rows.length) return res.status(409).json({ message: 'Admin with this email already exists' });
-    const hash = await bcrypt.hash(password, 10);
-    const { rows: [admin] } = await pool.query(
-      'INSERT INTO admins (name,email,password) VALUES ($1,$2,$3) RETURNING id,name,email', [name, email, hash]);
-    const token = jwt.sign({ id: admin.id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.status(201).json({ message: 'Admin registered', token, admin });
-  } catch (err) { res.status(500).json({ message: err.message }); }
-});
-
-app.post('/admin/auth/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) return res.status(400).json({ message: 'Email and password required' });
-    const { rows } = await pool.query('SELECT * FROM admins WHERE email=$1', [email]);
-    if (!rows.length || !(await bcrypt.compare(password, rows[0].password)))
-      return res.status(401).json({ message: 'Invalid email or password' });
-    const admin = rows[0];
-    const token = jwt.sign({ id: admin.id, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.json({ message: 'Admin login successful', token, admin: { id: admin.id, name: admin.name, email: admin.email } });
-  } catch (err) { res.status(500).json({ message: err.message }); }
-});
-
-app.get('/admin/auth/me', adminAuth, async (req, res) => {
-  const { rows } = await pool.query('SELECT id,name,email FROM admins WHERE id=$1', [req.adminId]);
-  rows.length ? res.json(rows[0]) : res.status(404).json({ message: 'Admin not found' });
 });
 
 
@@ -318,7 +241,7 @@ app.delete('/applications/:id', userAuth, async (req, res) => {
 
 
 
-app.get('/admin/applications', adminAuth, async (req, res) => {
+app.get('/admin/applications', async (req, res) => {
   const { rows } = await pool.query(
     `SELECT a.*, u.name AS applicant_name, u.email AS applicant_email,
             j.title AS job_title, j.company, j.location
@@ -329,7 +252,7 @@ app.get('/admin/applications', adminAuth, async (req, res) => {
   res.json(rows);
 });
 
-app.put('/admin/applications/:id/respond', adminAuth, async (req, res) => {
+app.put('/admin/applications/:id/respond', async (req, res) => {
   try {
     const { status, admin_response } = req.body;
     if (!['selected', 'rejected'].includes(status))
@@ -341,7 +264,7 @@ app.put('/admin/applications/:id/respond', adminAuth, async (req, res) => {
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
-app.post('/admin/jobs', adminAuth, async (req, res) => {
+app.post('/admin/jobs', async (req, res) => {
   try {
     const { title, company, location, description, skills_required } = req.body;
     if (!title || !company) return res.status(400).json({ message: 'Title and company required' });
@@ -352,12 +275,12 @@ app.post('/admin/jobs', adminAuth, async (req, res) => {
     const { rows: [job] } = await pool.query(
       `INSERT INTO jobs (id,title,company,location,description,skills_required,source,created_by_admin)
        VALUES ($1,$2,$3,$4,$5,$6,'admin',$7) RETURNING *`,
-      [id, title, company, location, description, skills, req.adminId]);
+      [id, title, company, location, description, skills, null]);
     res.status(201).json({ message: 'Job added', job });
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
-app.get('/admin/jobs', adminAuth, async (req, res) => {
+app.get('/admin/jobs', async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM jobs ORDER BY created_at DESC');
   res.json(rows);
 });

@@ -25,7 +25,6 @@ const Navbar = () => {
       <div className="navbar-container">
         
         <Link to="/home" className="navbar-logo">
-          <span className="logo-icon">⚡</span>
           <span className="logo-text">Job<span className="logo-accent">Portal</span></span>
         </Link>
 
