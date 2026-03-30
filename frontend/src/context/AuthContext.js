@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Restore user session
     const token = localStorage.getItem('token');
     const stored = localStorage.getItem('user');
     if (token && stored) {
@@ -17,7 +16,7 @@ export const AuthProvider = ({ children }) => {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
 
-    // Restore admin session
+    
     const adminToken = localStorage.getItem('adminToken');
     const storedAdmin = localStorage.getItem('adminUser');
     if (adminToken && storedAdmin) {

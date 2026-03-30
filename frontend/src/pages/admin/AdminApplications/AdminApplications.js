@@ -134,7 +134,6 @@ const AdminApplications = () => {
         </div>
       )}
 
-      {/* Respond Modal */}
       {respondModal && (
         <div className="modal-overlay" onClick={() => setRespondModal(null)}>
           <div className="respond-modal" onClick={(e) => e.stopPropagation()}>

@@ -1,3 +1,4 @@
+
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
@@ -9,7 +10,6 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ─── DB ───────────────────────────────────────────────────────────────────────
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -49,18 +49,17 @@ const initDB = async () => {
       status VARCHAR(50) DEFAULT 'pending', admin_response TEXT,
       responded_at TIMESTAMP, applied_date TIMESTAMP DEFAULT NOW())`);
 
-    console.log('✅ Database tables ready');
+    console.log(' Database tables ready');
   } finally {
     c.release();
   }
 };
 
-// ─── MIDDLEWARE ───────────────────────────────────────────────────────────────
 
 app.use(cors({ origin: (o, cb) => cb(null, true), credentials: true }));
 app.use(express.json());
 
-// Auth middleware — verifies user JWT
+
 const userAuth = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'No token provided' });
@@ -72,7 +71,7 @@ const userAuth = (req, res, next) => {
   } catch { res.status(401).json({ message: 'Invalid or expired token' }); }
 };
 
-// Auth middleware — verifies admin JWT
+
 const adminAuth = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'No admin token provided' });
@@ -84,7 +83,7 @@ const adminAuth = (req, res, next) => {
   } catch { res.status(401).json({ message: 'Invalid or expired token' }); }
 };
 
-// ─── JOB MATCHING ─────────────────────────────────────────────────────────────
+
 
 const matchJobs = (jobs, userSkills = []) => {
   const norm = (s) => s.toLowerCase().trim();
@@ -99,7 +98,7 @@ const matchJobs = (jobs, userSkills = []) => {
     .sort((a, b) => b.matchPercentage - a.matchPercentage);
 };
 
-// ─── SAMPLE JOBS ──────────────────────────────────────────────────────────────
+
 
 const SAMPLE_JOBS = [
   { id: 'sample-1', title: 'Senior React Developer', company: 'TechCorp India', location: 'Bangalore', description: 'Build scalable React apps and mentor junior devs.', skills_required: ['React', 'JavaScript', 'TypeScript', 'Redux', 'CSS'] },
@@ -122,7 +121,7 @@ const seedJobs = async () => {
       [job.id, job.title, job.company, job.location, job.description, job.skills_required]
     );
   }
-  console.log(`✅ Seeded ${SAMPLE_JOBS.length} sample jobs`);
+  console.log(` Seeded ${SAMPLE_JOBS.length} sample jobs`);
 };
 
 const autoSeedJobs = async () => {
@@ -145,11 +144,11 @@ const autoSeedJobs = async () => {
         [id, job.title || 'Untitled', job.company || 'Unknown', job.location || 'Remote', job.description || '', skills]
       );
     }
-    console.log(`✅ Seeded ${jobs.length} jobs from API`);
+    console.log(` Seeded ${jobs.length} jobs from API`);
   } catch { await seedJobs(); }
 };
 
-// ─── USER AUTH ROUTES ─────────────────────────────────────────────────────────
+
 
 app.post('/auth/register', async (req, res) => {
   try {
@@ -184,7 +183,6 @@ app.get('/auth/me', userAuth, async (req, res) => {
   rows.length ? res.json(rows[0]) : res.status(404).json({ message: 'User not found' });
 });
 
-// ─── ADMIN AUTH ROUTES ────────────────────────────────────────────────────────
 
 app.post('/admin/auth/register', async (req, res) => {
   try {
@@ -218,7 +216,6 @@ app.get('/admin/auth/me', adminAuth, async (req, res) => {
   rows.length ? res.json(rows[0]) : res.status(404).json({ message: 'Admin not found' });
 });
 
-// ─── PROFILE ROUTES ───────────────────────────────────────────────────────────
 
 app.get('/profile', userAuth, async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM user_profiles WHERE user_id=$1', [req.userId]);
@@ -255,7 +252,7 @@ app.put('/profile/:id', userAuth, async (req, res) => {
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
-// ─── JOB ROUTES ───────────────────────────────────────────────────────────────
+
 
 app.get('/jobs', userAuth, async (req, res) => {
   try {
@@ -291,7 +288,7 @@ app.post('/jobs/fetch-from-api', userAuth, async (req, res) => {
   } catch { await seedJobs(); res.json({ message: 'API unavailable, sample jobs loaded', count: SAMPLE_JOBS.length }); }
 });
 
-// ─── APPLICATION ROUTES ───────────────────────────────────────────────────────
+
 
 app.get('/applications', userAuth, async (req, res) => {
   const { rows } = await pool.query(
@@ -319,7 +316,7 @@ app.delete('/applications/:id', userAuth, async (req, res) => {
   rows.length ? res.json({ message: 'Application removed' }) : res.status(404).json({ message: 'Application not found' });
 });
 
-// ─── ADMIN ROUTES ─────────────────────────────────────────────────────────────
+
 
 app.get('/admin/applications', adminAuth, async (req, res) => {
   const { rows } = await pool.query(
@@ -365,12 +362,10 @@ app.get('/admin/jobs', adminAuth, async (req, res) => {
   res.json(rows);
 });
 
-// ─── HEALTH ───────────────────────────────────────────────────────────────────
+
 
 app.get('/health', (req, res) => res.json({ status: 'OK', timestamp: new Date() }));
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
-
-// ─── START ────────────────────────────────────────────────────────────────────
 
 const start = async () => {
   await initDB();

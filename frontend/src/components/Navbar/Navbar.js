@@ -83,7 +83,7 @@ const Navbar = () => {
             </Link>
           ))}
           <button className="mobile-logout" onClick={handleLogout}>
-            🚪 Sign Out
+            Sign Out
           </button>
         </div>
       )}

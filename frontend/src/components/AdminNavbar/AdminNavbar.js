@@ -23,7 +23,6 @@ const AdminNavbar = () => {
     <nav className="admin-navbar">
       <div className="admin-navbar-container">
         <Link to="/admin/applications" className="admin-logo">
-          <span>🛡️</span>
           <span>Admin<span className="logo-accent">Panel</span></span>
         </Link>
 

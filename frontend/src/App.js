@@ -18,7 +18,7 @@ import AdminApplications from './pages/admin/AdminApplications/AdminApplications
 import AddJob from './pages/admin/AddJob/AddJob';
 import AdminJobs from './pages/admin/AdminJobs/AdminJobs';
 
-// Admin layout wrapper
+
 const AdminLayout = ({ children }) => (
   <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb' }}>
     <AdminNavbar />
@@ -26,7 +26,7 @@ const AdminLayout = ({ children }) => (
   </div>
 );
 
-// User layout wrapper
+
 const UserLayout = ({ children }) => (
   <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-primary)' }}>
     <Navbar />
@@ -34,7 +34,6 @@ const UserLayout = ({ children }) => (
   </div>
 );
 
-// Root redirect logic
 const RootRedirect = () => {
   const { isAuthenticated, isAdminAuthenticated, loading } = useAuth();
   if (loading) return null;
@@ -48,13 +47,13 @@ function App() {
     <AuthProvider>
       <Router>
         <Switch>
-          {/* Public routes */}
+          
           <Route exact path="/" component={RootRedirect} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/admin/login" component={AdminLogin} />
 
-          {/* Admin routes */}
+          
           <AdminRoute
             path="/admin"
             component={() => (
@@ -69,7 +68,7 @@ function App() {
             )}
           />
 
-          {/* User routes */}
+          
           <Route
             render={() => (
               <UserLayout>
