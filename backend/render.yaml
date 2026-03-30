@@ -18,4 +18,4 @@ services:
       - key: INDIAN_API_URL
         value: https://jobs.indianapi.in
       - key: FRONTEND_URL
-        sync: false   # paste your Vercel URL e.g. https://jobportal.vercel.app
+        sync: https://jobportal-frontend-updated.onrender.com/  # paste your Vercel URL e.g. https://jobportal.vercel.app
